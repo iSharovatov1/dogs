@@ -1,28 +1,22 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
-import { getAllBreed, getImages } from '../api/fetch'
-
-import * as ACTION_TYPE from '../constants/actionTypes';
+import { getAllBreed, getImages } from '../api/fetch';
 
 export const fetchBreed = createAsyncThunk(
   'breed/fetchBreed',
-  async (thunkAPI) => {
-    // const response = await getAllBreed();    
-    return await getAllBreed()
-  }
-)
+  async () => {
+    const data = await getAllBreed();
+    return data;
+  },
+);
 
 export const fetchImages = createAsyncThunk(
   'breed/fetchImages',
-  async (data: any, thunkAPI) => {
-    // const response = await getAllBreed();
-    // console.log(breed, subBred, count);
-    
-    console.log('jjjjj',await getImages(data));
-    
-    return await getImages(data)
-  }
-)
+  async (req: any) => {
+    const data = await getImages(req);
+    return data;
+  },
+);
 
-export const chooseBreed = createAction<number, 'chooseBreed'>('chooseBreed')
-export const chooseSubBreed = createAction<number, 'chooseSubBreed'>('chooseSubBreed')
+export const chooseBreed = createAction<number, 'chooseBreed'>('chooseBreed');
+export const chooseSubBreed = createAction<number, 'chooseSubBreed'>('chooseSubBreed');

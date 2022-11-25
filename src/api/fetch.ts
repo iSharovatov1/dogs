@@ -1,49 +1,33 @@
 import axios from 'axios';
 
+const { REACT_APP_API_URL } = process.env;
+
 const getAllBreed = async () => {
   try {
-    const { data: { message }} = await axios({
+    const { data: { message } } = await axios({
       method: 'get',
-      url: 'https://dog.ceo/api/breeds/list/all'
-    })
+      url: `${REACT_APP_API_URL}breeds/list/all`,
+    });
     return message;
   } catch (e) {
     return e;
   }
-}
+};
 
-const getSubBreed = async (breed: String) => {
-  console.log(2);
-  
+const getImages = async ({ breed, subBreed, count } :any) => {
+  const query = `${breed}/${subBreed ? `${subBreed}/` : ''}images/random/${count || ''}`;
   try {
-    const { data: { message }} = await axios({
+    const { data: { message } } = await axios({
       method: 'get',
-      url: `https://dog.ceo/api/breed/${breed}/list`,
-    })
+      url: `${REACT_APP_API_URL}breed/${query}`,
+    });
     return message;
   } catch (e) {
     return e;
   }
-}
-
-const getImages = async ({breed, subBreed, count} :any) => {
-  console.log(1);
-  
-  try {
-    console.log(breed, subBreed);
-    
-    const { data: { message }} = await axios({
-      method: 'get',
-      url: `https://dog.ceo/api/breed/${breed}/${subBreed ? subBreed + '/': ''}images/random/${count ? count: ''}`,
-    })
-    return message;
-  } catch (e) {
-    return e;
-  }
-}
+};
 
 export {
   getAllBreed,
-  getSubBreed,
-  getImages
+  getImages,
 };

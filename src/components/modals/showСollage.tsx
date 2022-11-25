@@ -1,84 +1,71 @@
-import { Modal, Box, Typography, Grid } from '@mui/material'
-import { iteratorSymbol } from 'immer/dist/internal';
-import React, { useEffect, useRef, useState } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState,
+  memo,
+  ReactElement,
+} from 'react';
+
 import { useSelector } from 'react-redux';
-import '../../index.css'
 
-const ShowСollage = ({ isOpen, handelClose }: any) => {
-  const ref = useRef<any>(null);
+import { Modal, Box } from '@mui/material';
 
-  const {
-    images,
-  } = useSelector((state: any) => state);
-  const [row, setRow] = useState(1)
-
-  useEffect(() => {
-    setRow(Math.round(images.length / Math.round(Math.sqrt(images.length))))
-  }, [images])
-
-  const sqr = Math.round(Math.sqrt(images.length))
-  // console.log(sqr);
-  
-  // const row = (images.length / sqr) && 1
-  console.log((ref.current as any)?.offsetHeight ?? 1);
-  const height = (ref.current as any)?.offsetHeight / sqr ?? 1
-  const width = (ref.current as any)?.offsetWidth / Math.round(images.length/sqr) ?? 1
-  
-  return (
-  <Modal
-    open={isOpen}
-    onClose={handelClose}
-    aria-labelledby="modal-modal-title"
-    aria-describedby="modal-modal-description"
-  >
-    <Box 
-      ref={ref}
-      sx={{position: 'absolute', width: 400, height: 400, background: 'white', top: 200, left: 200}}
-    >
-
-      <div style={{display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)`}}>
-        {images.map((col: any) => 
-        // <div>
-          <img
-            src={col}
-            className='image'
-            height={height}
-            width={width}
-          />
-        // </div>
-        )}
-      </div>
-
-
-      {/* <Grid container spacing={1}>
-        {images.map((row: any) =>
-          <Grid container item xs={12} spacing={3}>
-            <img src={row} className='image' height={100} widht={100}/>
-          </Grid>
-        )}
-
-  </Grid> */}
-
-
-{/* </Grid> */}
-      {/* <div>
-        {images.map((col: any) => 
-        <div>
-          {col.map((row: any) =>
-            <img src={row} className='image'/>
-            )
-          }
-        </div>)}
-      </div> */}
-
-      {/* <Typography id="modal-modal-title" variant="h6" component="h2">
-        Text in a modal
-      </Typography>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </Typography> */}
-    </Box>
-  </Modal>  )
+interface IShowCollageProps {
+  isOpen: false,
+  handelClose: () => void,
 }
 
-export default ShowСollage;
+function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
+  const [row, setRow] = useState(1);
+  const { images, isLoading } = useSelector((state: any) => state);
+  const ref = useRef<any>(null);
+  const sqr = Math.round(Math.sqrt(images.length));
+  const height = (ref.current as any)?.offsetHeight / sqr ?? 1;
+  const width = (ref.current as any)?.offsetWidth / Math.round(images.length / sqr) ?? 1;
+
+  useEffect(() => {
+    setRow(Math.round(images.length / Math.round(Math.sqrt(images.length))));
+  }, [images]);
+
+  return (
+    <Modal
+      open={isOpen}
+      onClose={handelClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <>
+      { isLoading && <div>Loading</div> }
+      { !isLoading && (
+      <Box
+        ref={ref}
+        sx={{
+          position: 'absolute',
+          width: window.innerWidth * 0.7,
+          height: window.innerHeight * 0.7,
+          background: 'white',
+          top: window.innerWidth * 0.15,
+          left: window.innerWidth * 0.15,
+        }}
+      >
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)` }}>
+          {
+            images.map((item: any) => (
+              <img
+                src={item}
+                height={height}
+                width={width}
+                alt="dog"
+                key={item}
+              />
+            ))
+          }
+        </div>
+      </Box>
+      )}
+      </>
+    </Modal>
+  );
+}
+
+export default memo(ShowCollage);
