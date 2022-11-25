@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, TextField } from '@mui/material';
 
 import Selector from './components/Selector';
-import ShowСollage from './components/modals/showСollage';
+import ShowСollage from './components/modals/ShowСollage';
 
 import {
   chooseBreed,
@@ -20,6 +20,7 @@ import {
 } from './redux/action';
 
 import './App.css';
+import { IStore } from './interfaces';
 
 function App(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +31,7 @@ function App(): ReactElement {
     breeds,
     currentBreed,
     currentSubBreed,
-  } = useSelector((state: any) => state);
+  } = useSelector((state: IStore) => state);
 
   const dispatch = useDispatch();
 

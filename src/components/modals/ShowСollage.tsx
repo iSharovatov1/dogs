@@ -9,6 +9,7 @@ import React, {
 import { useSelector } from 'react-redux';
 
 import { Modal, Box } from '@mui/material';
+import { IStore } from '../../interfaces';
 
 interface IShowCollageProps {
   isOpen: false,
@@ -17,8 +18,8 @@ interface IShowCollageProps {
 
 function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
   const [row, setRow] = useState(1);
-  const { images, isLoading, error } = useSelector((state: any) => state);
-  const ref = useRef<any>(null);
+  const { images, isLoading, error } = useSelector((state: IStore) => state);
+  const ref = useRef(null);
   const sqr = Math.round(Math.sqrt(images.length));
   const height = (ref.current as any)?.offsetHeight / sqr ?? 1;
   const width = (ref.current as any)?.offsetWidth / Math.round(images.length / sqr) ?? 1;
@@ -70,7 +71,7 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
         >
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)` }}>
             {
-            images.map((item: any) => (
+            images.map((item: String) => (
               <img
                 src={item}
                 height={height}

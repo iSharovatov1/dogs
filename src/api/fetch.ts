@@ -1,12 +1,8 @@
 import axios from 'axios';
 
-const { REACT_APP_API_URL } = process.env;
+import { IGetImagesParams } from '../interfaces';
 
-interface IGetImagesParams {
-  breed: String,
-  subBreed: String,
-  count: number,
-}
+const { REACT_APP_API_URL } = process.env;
 
 const getBreeds = async () => {
   try {

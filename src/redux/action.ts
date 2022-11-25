@@ -1,6 +1,7 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
 import { getBreeds, getImages } from '../api/fetch';
+import { IGetImagesParams } from '../interfaces';
 
 export const fetchBreed = createAsyncThunk(
   'breed/fetchBreed',
@@ -12,7 +13,7 @@ export const fetchBreed = createAsyncThunk(
 
 export const fetchImages = createAsyncThunk(
   'breed/fetchImages',
-  async (req: any) => {
+  async (req: IGetImagesParams) => {
     const data = await getImages(req);
     return data;
   },

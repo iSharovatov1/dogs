@@ -7,8 +7,8 @@ import {
   Select,
 } from '@mui/material';
 
-interface ISelecterProps {
-  fields: any[],
+interface ISelectorProps {
+  fields: [String],
   value: number,
   label: string,
   handleChange: () => void,
@@ -19,7 +19,7 @@ function Selector({
   value,
   label,
   handleChange,
-}: ISelecterProps): ReactElement {
+}: ISelectorProps): ReactElement {
   return (
     <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>

@@ -31,7 +31,6 @@ module.exports = {
 
   settings: {
     'import/extensions': ['.js', '.jsx', '.tsx', '.ts'],
-    // 'react/jsx-filename-extension': [0],
     'import/resolver': {
       typescript: {},
     },

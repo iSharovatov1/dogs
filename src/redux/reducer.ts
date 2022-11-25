@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { IStore } from '../interfaces';
 
 import {
   fetchBreed,
@@ -17,7 +18,7 @@ const initialState = {
   images: [],
   isLoading: false,
   error: null,
-};
+} as IStore;
 
 const reducer = createReducer(initialState, (builder) => {
   builder
