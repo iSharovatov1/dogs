@@ -1,4 +1,4 @@
-import {
+import React, {
   useEffect,
   useRef,
   useState,
@@ -17,7 +17,7 @@ interface IShowCollageProps {
 
 function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
   const [row, setRow] = useState(1);
-  const { images, isLoading } = useSelector((state: any) => state);
+  const { images, isLoading, error } = useSelector((state: any) => state);
   const ref = useRef<any>(null);
   const sqr = Math.round(Math.sqrt(images.length));
   const height = (ref.current as any)?.offsetHeight / sqr ?? 1;
@@ -27,6 +27,26 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
     setRow(Math.round(images.length / Math.round(Math.sqrt(images.length))));
   }, [images]);
 
+  if (error) {
+    return (
+      <Modal>
+        <Box
+          ref={ref}
+          sx={{
+            position: 'absolute',
+            width: window.innerWidth * 0.7,
+            height: window.innerHeight * 0.7,
+            background: 'white',
+            top: window.innerWidth * 0.15,
+            left: window.innerWidth * 0.15,
+          }}
+        >
+          Error
+        </Box>
+      </Modal>
+    );
+  }
+
   return (
     <Modal
       open={isOpen}
@@ -35,21 +55,21 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
       aria-describedby="modal-modal-description"
     >
       <>
-      { isLoading && <div>Loading</div> }
-      { !isLoading && (
-      <Box
-        ref={ref}
-        sx={{
-          position: 'absolute',
-          width: window.innerWidth * 0.7,
-          height: window.innerHeight * 0.7,
-          background: 'white',
-          top: window.innerWidth * 0.15,
-          left: window.innerWidth * 0.15,
-        }}
-      >
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)` }}>
-          {
+        { isLoading && <div>Loading</div> }
+        { !isLoading && (
+        <Box
+          ref={ref}
+          sx={{
+            position: 'absolute',
+            width: window.innerWidth * 0.7,
+            height: window.innerHeight * 0.7,
+            background: 'white',
+            top: window.innerWidth * 0.15,
+            left: window.innerWidth * 0.15,
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)` }}>
+            {
             images.map((item: any) => (
               <img
                 src={item}
@@ -60,9 +80,9 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
               />
             ))
           }
-        </div>
-      </Box>
-      )}
+          </div>
+        </Box>
+        )}
       </>
     </Modal>
   );

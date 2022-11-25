@@ -1,4 +1,4 @@
-import { memo, ReactElement } from 'react';
+import React, { memo, ReactElement } from 'react';
 
 import {
   FormControl,
@@ -7,7 +7,7 @@ import {
   Select,
 } from '@mui/material';
 
-interface ISelecterPtops {
+interface ISelecterProps {
   fields: any[],
   value: number,
   label: string,
@@ -22,15 +22,15 @@ function Selector({
 }: ISelecterProps): ReactElement {
   return (
     <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+      <InputLabel>{label}</InputLabel>
       <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
         value={value}
-        label="Age"
+        label={label}
         onChange={handleChange}
       >
-        {fields.map((item: String, index: number) => <MenuItem value={index}>{item}</MenuItem>)}
+        {fields.map((item: String, index: number) => (
+          <MenuItem value={index} key={index}>{item}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

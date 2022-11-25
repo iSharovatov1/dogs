@@ -1,7 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import {
-  fetchBreed, chooseBreed, chooseSubBreed, fetchImages,
+  fetchBreed,
+  chooseBreed,
+  chooseSubBreed,
+  fetchImages,
 } from './action';
 
 const initialState = {

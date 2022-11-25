@@ -1,11 +1,11 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 
-import { getAllBreed, getImages } from '../api/fetch';
+import { getBreeds, getImages } from '../api/fetch';
 
 export const fetchBreed = createAsyncThunk(
   'breed/fetchBreed',
   async () => {
-    const data = await getAllBreed();
+    const data = await getBreeds();
     return data;
   },
 );

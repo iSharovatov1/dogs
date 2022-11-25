@@ -2,7 +2,13 @@ import axios from 'axios';
 
 const { REACT_APP_API_URL } = process.env;
 
-const getAllBreed = async () => {
+interface IGetImagesParams {
+  breed: String,
+  subBreed: String,
+  count: number,
+}
+
+const getBreeds = async () => {
   try {
     const { data: { message } } = await axios({
       method: 'get',
@@ -14,7 +20,7 @@ const getAllBreed = async () => {
   }
 };
 
-const getImages = async ({ breed, subBreed, count } :any) => {
+const getImages = async ({ breed, subBreed, count }: IGetImagesParams) => {
   const query = `${breed}/${subBreed ? `${subBreed}/` : ''}images/random/${count || ''}`;
   try {
     const { data: { message } } = await axios({
@@ -28,6 +34,6 @@ const getImages = async ({ breed, subBreed, count } :any) => {
 };
 
 export {
-  getAllBreed,
+  getBreeds,
   getImages,
 };

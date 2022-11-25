@@ -48,6 +48,13 @@ function App(): ReactElement {
     dispatch(fetchImages(data));
   };
 
+  const handleChangeCount = (value: number) => {
+    if (value < 1) {
+      return setImagesCount(1);
+    }
+    return setImagesCount(value);
+  };
+
   return (
     <div className="App">
       { breeds && (
@@ -69,7 +76,7 @@ function App(): ReactElement {
         label="Count"
         variant="outlined"
         value={imagesCount}
-        onChange={(e) => setImagesCount(e.target.value)}
+        onChange={(e) => handleChangeCount(+e.target.value)}
         type="number"
       />
       <Button
