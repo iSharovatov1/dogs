@@ -1,4 +1,20 @@
 .App {
   display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+.Header {
+  display: flex;
+}
+
+.Table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.MenuItem {
+  width: 25%;
+  font-size: 20px;
 }

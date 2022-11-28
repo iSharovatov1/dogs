@@ -13,11 +13,19 @@ export const fetchBreed = createAsyncThunk(
 
 export const fetchImages = createAsyncThunk(
   'breed/fetchImages',
-  async (req: IGetImagesParams) => {
-    const data = await getImages(req);
+  async (_, thunkApi: any) => {
+    const { requests } = thunkApi.getState();
+    const data = [];
+    for await (const i of requests) {
+      const newData = await getImages(i);
+      data.push(...newData);
+    }
+
     return data;
   },
 );
 
-export const chooseBreed = createAction<number, 'chooseBreed'>('chooseBreed');
-export const chooseSubBreed = createAction<number, 'chooseSubBreed'>('chooseSubBreed');
+export const removeFetcher = createAction<IGetImagesParams, 'removeFetcher'>('removeFetcher');
+export const addFetcher = createAction<IGetImagesParams, 'addFetcher'>('addFetcher');
+export const chooseBreed = createAction<any, 'chooseBreed'>('chooseBreed');
+export const chooseSubBreed = createAction<any, 'chooseSubBreed'>('chooseSubBreed');

@@ -8,10 +8,10 @@ import {
 } from '@mui/material';
 
 interface ISelectorProps {
-  fields: [String],
+  fields: string[],
   value: number,
   label: string,
-  handleChange: () => void,
+  handleChange: (item: any, index: number) => void,
 }
 
 function Selector({
@@ -24,11 +24,12 @@ function Selector({
     <FormControl fullWidth>
       <InputLabel>{label}</InputLabel>
       <Select
+        disabled={!fields.length}
         value={value}
         label={label}
         onChange={handleChange}
       >
-        {fields.map((item: String, index: number) => (
+        {fields.map((item: string, index: number) => (
           <MenuItem value={index} key={index}>{item}</MenuItem>
         ))}
       </Select>

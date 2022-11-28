@@ -1,17 +1,28 @@
 export interface IGetImagesParams {
-  breed: String,
-  subBreed: String,
+  breed: string,
+  subBreed: string,
   count: number,
 }
 
 export interface IStore {
-  Dogs: {},
-  breeds: String[] | [],
-  subBreeds: [String] | [],
+  Dogs: any,
+  breeds: string[] | [],
+  subBreeds: [string] | [],
   currentBreed: number,
   currentSubBreed: number,
   imagesCount: number,
-  images: [String] | [],
+  images: [string] | [],
+  requests: [any] | []
   isLoading: boolean,
-  error: String | null,
+  error: string | null,
+}
+
+export interface IAddFetcher {
+  payload: IGetImagesParams,
+}
+
+export interface IFetchImagesReject {
+  payload: {
+    data: string,
+  },
 }

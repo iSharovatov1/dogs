@@ -4,15 +4,17 @@ import React, {
   useState,
   memo,
   ReactElement,
+  useLayoutEffect,
 } from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { Modal, Box } from '@mui/material';
+import { Box, Modal } from '@mui/material';
 import { IStore } from '../../interfaces';
+import { Loader } from '../Loader';
 
 interface IShowCollageProps {
-  isOpen: false,
+  isOpen: boolean,
   handelClose: () => void,
 }
 
@@ -21,16 +23,21 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
   const { images, isLoading, error } = useSelector((state: IStore) => state);
   const ref = useRef(null);
   const sqr = Math.round(Math.sqrt(images.length));
-  const height = (ref.current as any)?.offsetHeight / sqr ?? 1;
-  const width = (ref.current as any)?.offsetWidth / Math.round(images.length / sqr) ?? 1;
+  const [height, setHeight] = useState(1);
+  const [width, setWidth] = useState(1);
 
   useEffect(() => {
     setRow(Math.round(images.length / Math.round(Math.sqrt(images.length))));
   }, [images]);
 
+  useLayoutEffect(() => {
+    setHeight((ref.current as any)?.offsetHeight / sqr ?? 1);
+    setWidth((ref.current as any)?.offsetWidth / Math.round(images.length / sqr) ?? 1);
+  });
+
   if (error) {
     return (
-      <Modal>
+      <Modal open={isOpen}>
         <Box
           ref={ref}
           sx={{
@@ -46,7 +53,7 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
         </Box>
       </Modal>
     );
-  }
+  }  
 
   return (
     <Modal
@@ -56,7 +63,7 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
       aria-describedby="modal-modal-description"
     >
       <>
-        { isLoading && <div>Loading</div> }
+        { isLoading && <Loader /> }
         { !isLoading && (
         <Box
           ref={ref}
@@ -71,13 +78,13 @@ function ShowCollage({ isOpen, handelClose }: IShowCollageProps): ReactElement {
         >
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${row}, 1fr)` }}>
             {
-            images.map((item: String) => (
+            images.map((item: string, index: number) => (
               <img
-                src={item}
+                src={item.toString()}
                 height={height}
                 width={width}
                 alt="dog"
-                key={item}
+                key={index}
               />
             ))
           }
